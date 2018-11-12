@@ -4,6 +4,12 @@
     <string name="dateText">Choose Date</string>
     <string name="enterDetails">Enter Meeting Details</string>
     <string name="timeText">Choose Time</string>
-    <string name="timeFormatted">%1$s : %2$s</string>
-    <string name="dateFormatted">%1$s / %2$s / %3$s</string>
+    <string name="timeFormatted">%1$d : %2$d</string>
+    <string name="dateFormatted">%1$d / %2$d / %3$d</string>
+    <string name="meetingName">Meeting Name</string>
+    <string name="meetingDesc">Meeting Description</string>
+    <string name="descTxt">Description: </string>
+    <string name="nameTxt">Name: </string>
+
+
 </resources>

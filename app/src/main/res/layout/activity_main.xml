@@ -18,15 +18,79 @@
     />
 
     <TextView
-        android:id="@+id/EnterDetailsTxt"
+        android:id="@+id/enterDetailsTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/my_toolbar"
+        android:textSize="@dimen/meetingDetailsTextSize"
+        android:textColor="@color/colorPrimary"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:textAlignment="center"
         android:text="@string/enterDetails"
+    />
+
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/meetingDetailsTextSize"
+        android:layout_below="@+id/enterDetailsTxt"
+        android:layout_alignStart="@id/meetingName"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:text="@string/nameTxt"
+    />
+
+    <EditText
+        android:id="@+id/meetingName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/meetingDetailsTextSize"
+        android:layout_below="@+id/enterDetailsTxt"
+        android:layout_alignEnd="@id/nameText"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:inputType="textAutoComplete"
+        android:hint="@string/meetingName"
+    />
+
+    <TextView
+        android:id="@+id/descText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/meetingDetailsTextSize"
+        android:layout_below="@+id/nameText"
+        android:layout_alignStart="@id/meetingDesc"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:text="@string/descTxt"
+        />
+
+    <EditText
+        android:id="@+id/meetingDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/meetingDetailsTextSize"
+        android:layout_below="@+id/meetingName"
+        android:layout_alignEnd="@id/descText"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:inputType=""
+        android:hint="@string/meetingDesc"
     />
 
     <TextView
@@ -36,8 +100,8 @@
         android:layout_centerHorizontal="true"
         android:text="@string/dateText"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
-        android:layout_below="@id/EnterDetailsTxt"
+        android:textSize="@dimen/meetingDetailsTextSize"
+        android:layout_below="@+id/meetingDesc"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
@@ -50,11 +114,10 @@
         android:layout_centerHorizontal="true"
         android:text="@string/timeText"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
-        android:layout_below="@id/textDate"
+        android:textSize="@dimen/meetingDetailsTextSize"
+        android:layout_below="@+id/textDate"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
     />
-
 </RelativeLayout>

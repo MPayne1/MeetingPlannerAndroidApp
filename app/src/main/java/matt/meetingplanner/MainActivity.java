@@ -2,6 +2,7 @@ package matt.meetingplanner;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentResolver;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -43,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
-                String FormatedDate = getString(R.string.dateFormatted, dayOfMonth, monthOfYear, year);
-                textDate.setText(FormatedDate);
+                String FormattedDate = getString(R.string.dateFormatted, dayOfMonth, monthOfYear, year);
+                textDate.setText(FormattedDate);
             }
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
