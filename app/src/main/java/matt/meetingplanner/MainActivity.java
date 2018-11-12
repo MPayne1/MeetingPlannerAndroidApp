@@ -1,27 +1,17 @@
 package matt.meetingplanner;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
+import android.app.TimePickerDialog;
 import android.icu.util.Calendar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.Console;
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
-import java.util.Date;
-import java.util.Locale;
+import android.widget.TimePicker;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +21,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+
         setUpDatePicker();
+        setUpTimePicker();
+
     }
 
 
@@ -41,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    // Date needs formatting properly
+    // TODO Date needs formatting properly
     public void setUpDatePicker() {
         final TextView textDate = (TextView) findViewById(R.id.textDate);
         final Calendar newCalendar = Calendar.getInstance();
@@ -50,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
-                textDate.setText(newDate.getTime().toString());
+                String FormatedDate = getString(R.string.dateFormatted, dayOfMonth, monthOfYear, year);
+                textDate.setText(FormatedDate);
             }
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
@@ -62,5 +56,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void setUpTimePicker() {
+        final TextView textTime = (TextView) findViewById(R.id.textTime);
+        textTime.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                final Calendar currentTime = Calendar.getInstance();
+                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = currentTime.get(Calendar.MINUTE);
+                TimePickerDialog timePicker;
+                timePicker = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        // TODO need to format time to keep leading 0s and do 00 properlty
+                        String FormattedTime =  getString(R.string.timeFormatted, selectedHour, selectedMinute);
+                        textTime.setText(FormattedTime);
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                timePicker.setTitle(R.string.timeText);
+                timePicker.show();
+            }
+        });
+    }
+
+
 }
 

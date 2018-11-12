@@ -3,4 +3,7 @@
     <string name="settings">Settings</string>
     <string name="dateText">Choose Date</string>
     <string name="enterDetails">Enter Meeting Details</string>
+    <string name="timeText">Choose Time</string>
+    <string name="timeFormatted">%1$s : %2$s</string>
+    <string name="dateFormatted">%1$s / %2$s / %3$s</string>
 </resources>
