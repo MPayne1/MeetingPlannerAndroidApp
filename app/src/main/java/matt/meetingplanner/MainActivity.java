@@ -2,7 +2,6 @@ package matt.meetingplanner;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.ContentResolver;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -81,7 +80,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }
 
