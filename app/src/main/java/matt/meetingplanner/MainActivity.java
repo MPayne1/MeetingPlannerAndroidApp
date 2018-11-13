@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView textDate = (TextView) findViewById(R.id.textDate);
         final Calendar newCalendar = Calendar.getInstance();
 
-        final DatePickerDialog  StartTime = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+        final DatePickerDialog  StartTime = new DatePickerDialog(this, R.style.DatePickerTheme ,new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 int hour = currentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = currentTime.get(Calendar.MINUTE);
                 TimePickerDialog timePicker;
-                timePicker = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                timePicker = new TimePickerDialog(MainActivity.this, R.style.TimePickerTheme, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         // TODO need to format time to keep leading 0s and do 00 properlty
@@ -75,10 +76,16 @@ public class MainActivity extends AppCompatActivity {
                         textTime.setText(FormattedTime);
                     }
                 }, hour, minute, true);//Yes 24 hour time
-                timePicker.setTitle(R.string.timeText);
+
                 timePicker.show();
             }
         });
+    }
+
+
+    public void submitMeeting(View view) {
+        //TODO submit meeting
+        Toast.makeText(this, "Submitted", Toast.LENGTH_SHORT).show();
     }
 }
 

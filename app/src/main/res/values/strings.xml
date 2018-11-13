@@ -10,4 +10,5 @@
     <string name="meetingDesc">Meeting Description</string>
     <string name="descTxt">Description: </string>
     <string name="nameTxt">Name: </string>
+    <string name="submitMeeting">Submit</string>
 </resources>
