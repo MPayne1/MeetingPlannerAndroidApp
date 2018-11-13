@@ -82,9 +82,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+    //TODO submit meeting
     public void submitMeeting(View view) {
-        //TODO submit meeting
+
         Toast.makeText(this, "Submitted", Toast.LENGTH_SHORT).show();
     }
 }
