@@ -17,98 +17,19 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
     />
 
-    <TextView
-        android:id="@+id/enterDetailsTxt"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/my_toolbar"
-        android:textSize="@dimen/meetingDetailsTextSize"
-        android:textColor="@color/colorPrimary"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:textAlignment="center"
-        android:text="@string/enterDetails"
     />
 
-    <EditText
-        android:id="@+id/meetingName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/meetingDetailsTextSize"
-        android:layout_below="@+id/enterDetailsTxt"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:inputType="textAutoComplete"
-        android:hint="@string/meetingName"
-        android:maxLength="30"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_below="@id/tab_layout"
     />
 
-    <EditText
-        android:id="@+id/meetingDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/meetingDetailsTextSize"
-        android:layout_below="@+id/meetingName"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:inputType="textAutoComplete"
-        android:hint="@string/meetingDesc"
-        android:maxLength="100"
-    />
 
-    <TextView
-        android:id="@+id/textDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/dateText"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/meetingDetailsTextSize"
-        android:textAlignment="center"
-        android:layout_below="@+id/meetingDesc"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-    />
-
-    <TextView
-        android:id="@+id/textTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/timeText"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/meetingDetailsTextSize"
-        android:textAlignment="center"
-        android:layout_below="@+id/textDate"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-    />
-
-<!-- TODO make button subtly change when pressed   -->
-    <Button
-        android:id="@+id/submitBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/submitMeeting"
-        android:layout_alignParentBottom="true"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:onClick="submitMeeting"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        android:textAlignment="center"
-        android:background="@drawable/roundedcornersbtn"
-    />
 
 </RelativeLayout>
