@@ -11,4 +11,6 @@
     <string name="descTxt">Description: </string>
     <string name="nameTxt">Name: </string>
     <string name="submitMeeting">Submit</string>
+    <string name="createMeeting">Create Meeting</string>
+    <string name="pastMeetings">Past Meetings</string>
 </resources>
