@@ -8,19 +8,13 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="matt.meetingplanner.PastMeetings">
 
-
-
-    <TextView
-        android:id="@+id/pastMeeting"
+    <ListView
+        android:id="@+id/meetingList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Past Meeting"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/meetingDetailsTextSize"
-        android:textAlignment="center"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        />
+    />
+
+
 </RelativeLayout>
