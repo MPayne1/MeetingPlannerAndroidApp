@@ -28,6 +28,5 @@ public class PastMeetings  extends Fragment  {
         return rootView;
     }
 
-
-
+    // TODO make so it refreshes when the view is reselected
 }
