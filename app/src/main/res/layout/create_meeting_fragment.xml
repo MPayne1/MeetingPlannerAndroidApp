@@ -83,6 +83,8 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         />
 
+    <!-- TODO add location field-->
+    <!-- TODO add attendees -->
     <!-- TODO make button subtly change when pressed   -->
     <Button
         android:id="@+id/submitBtn"
@@ -93,7 +95,6 @@
         android:layout_alignParentBottom="true"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:onClick="submitMeeting"
         android:textStyle="bold"
         android:textAllCaps="false"
         android:textAlignment="center"
