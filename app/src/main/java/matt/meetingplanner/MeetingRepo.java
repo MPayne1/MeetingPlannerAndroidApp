@@ -22,8 +22,7 @@ public class MeetingRepo {
         values.put(Meeting.KEY_NAME, meeting.name);
         values.put(Meeting.KEY_DESCRIPTION, meeting.description);
         values.put(Meeting.KEY_LOCATION, meeting.location);
-        values.put(Meeting.KEY_DATE, meeting.date);
-        values.put(Meeting.KEY_TIME, meeting.time);
+        values.put(Meeting.KEY_DATE_TIME, meeting.dateTime);
 
         db.insert(Meeting.TABLE, null, values);
         db.close();
@@ -40,13 +39,38 @@ public class MeetingRepo {
         ArrayList<Meeting> meetingList = new ArrayList<>();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
+
         if(cursor.moveToFirst()) {
             do {
                 Meeting m = new Meeting();
                 m.name = cursor.getString(cursor.getColumnIndex(Meeting.KEY_NAME));
                 m.description = cursor.getString(cursor.getColumnIndex(Meeting.KEY_DESCRIPTION));
-                m.date = cursor.getString(cursor.getColumnIndex(Meeting.KEY_DATE));
-                m.time = cursor.getString(cursor.getColumnIndex(Meeting.KEY_TIME));
+                m.dateTime = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Meeting.KEY_DATE_TIME)));
+                m.location = cursor.getString(cursor.getColumnIndex(Meeting.KEY_LOCATION));
+                m.meetingID = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Meeting.KEY_ID)));
+                meetingList.add(m);
+            } while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return meetingList;
+    }
+
+    public ArrayList<Meeting> getPastMeetingList() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + Meeting.TABLE +  " WHERE "  +  Meeting.KEY_DATE_TIME
+                + " < " + System.currentTimeMillis() + ";";
+
+        ArrayList<Meeting> meetingList = new ArrayList<>();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                Meeting m = new Meeting();
+                m.name = cursor.getString(cursor.getColumnIndex(Meeting.KEY_NAME));
+                m.description = cursor.getString(cursor.getColumnIndex(Meeting.KEY_DESCRIPTION));
+                m.dateTime = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Meeting.KEY_DATE_TIME)));
                 m.location = cursor.getString(cursor.getColumnIndex(Meeting.KEY_LOCATION));
                 m.meetingID = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Meeting.KEY_ID)));
                 meetingList.add(m);
@@ -56,5 +80,17 @@ public class MeetingRepo {
         db.close();
         return meetingList;
     }
-}
 
+    public ArrayList<Meeting> getPastMeetingList2() {
+        ArrayList<Meeting> allMeetings = getMeetingList();
+        ArrayList<Meeting> pastMeetings = new ArrayList<>();
+        for(int i =0; i < allMeetings.size(); i++) {
+            long dt = allMeetings.get(i).dateTime;
+            if(dt < System.currentTimeMillis()) {
+                pastMeetings.add(allMeetings.get(i));
+            }
+        }
+        return pastMeetings;
+    }
+
+}

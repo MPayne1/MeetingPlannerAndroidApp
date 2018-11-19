@@ -45,8 +45,7 @@ public class MeetingListAdapter extends BaseAdapter {
             holder.meetingName = (TextView) view.findViewById(R.id.meeting_list_name);
             holder.meetingDescription = (TextView) view.findViewById(R.id.meeting_list_desc);
             holder.location = (TextView) view.findViewById(R.id.meeting_list_location);
-            holder.date = (TextView) view.findViewById(R.id.meeting_list_date);
-            holder.time = (TextView) view.findViewById(R.id.meeting_list_time);
+            holder.dateTime = (TextView) view.findViewById(R.id.meeting_list_date_time);
             holder.id = (TextView) view.findViewById(R.id.meeting_list_id);
 
             view.setTag(holder);
@@ -56,14 +55,13 @@ public class MeetingListAdapter extends BaseAdapter {
         holder.meetingName.setText(meetingList.get(position).name);
         holder.meetingDescription.setText(meetingList.get(position).description);
         holder.location.setText(meetingList.get(position).location);
-        holder.date.setText(meetingList.get(position).date);
-        holder.time.setText(meetingList.get(position).time);
+        holder.dateTime.setText(String.valueOf(meetingList.get(position).dateTime));
         //holder.id.setText(meetingList.get(position).meetingID);
 
         return view;
     }
 
     static class ViewHolder{
-        TextView meetingName, meetingDescription, location, date, time, id;
+        TextView meetingName, meetingDescription, location, dateTime, id;
     }
 }

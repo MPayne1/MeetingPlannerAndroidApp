@@ -39,7 +39,7 @@
     />
 
     <TextView
-        android:id="@+id/meeting_list_date"
+        android:id="@+id/meeting_list_date_time"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -47,13 +47,5 @@
         android:textSize="20sp"
     />
 
-    <TextView
-        android:id="@+id/meeting_list_time"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:textSize="20sp"
-    />
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class CreateMeetingFragment extends Fragment{
 
+    private String mDate;
+    private String mTime;
     private View view;
     EditText name;
     EditText description;
@@ -43,8 +50,11 @@ public class CreateMeetingFragment extends Fragment{
 
                 meeting.name = name.getText().toString();
                 meeting.description = description.getText().toString();
-                meeting.date = date.getText().toString();
-                meeting.time = time.getText().toString();
+                mDate = date.getText().toString();
+                mTime = time.getText().toString();
+                meeting.dateTime = dateFormat();
+
+                Log.d("DateTime", "onClick: " + mDate + mTime);
                 meeting.location = "location 1";
 
                 repo.insert(meeting);
@@ -93,7 +103,7 @@ public class CreateMeetingFragment extends Fragment{
                 timePicker = new TimePickerDialog(v.getContext(), R.style.TimePickerTheme, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        // TODO need to format time to keep leading 0s and do 00 properlty
+                        // TODO need to format time to keep leading 0s and do 00 properly
                         String FormattedTime =  getString(R.string.timeFormatted, selectedHour, selectedMinute);
                         textTime.setText(FormattedTime);
                     }
@@ -102,5 +112,19 @@ public class CreateMeetingFragment extends Fragment{
                 timePicker.show();
             }
         });
+    }
+
+    // format the date and time so can be stored in db
+    private int dateFormat() {
+        String dateTime = mDate + " " + mTime;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd / MM / yyyy HH : mm");
+        Date date = null;
+        try {
+            date = sdf.parse(dateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        int dt = (int) date.getTime();
+        return dt;
     }
 }

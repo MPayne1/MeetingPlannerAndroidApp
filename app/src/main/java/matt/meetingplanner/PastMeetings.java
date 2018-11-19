@@ -18,7 +18,7 @@ public class PastMeetings  extends Fragment  {
         View rootView = inflater.inflate(R.layout.past_meetings_fragment, container,false);
 
         MeetingRepo repo = new MeetingRepo(getContext());
-        ArrayList<Meeting> meetingList = repo.getMeetingList();
+        ArrayList<Meeting> meetingList = repo.getPastMeetingList2();
 
         if(meetingList.size() != 0) {
             ListView listView = (ListView) rootView.findViewById(R.id.meetingList);
