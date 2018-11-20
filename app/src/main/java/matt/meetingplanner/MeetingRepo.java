@@ -22,7 +22,8 @@ public class MeetingRepo {
         values.put(Meeting.KEY_NAME, meeting.name);
         values.put(Meeting.KEY_DESCRIPTION, meeting.description);
         values.put(Meeting.KEY_LOCATION, meeting.location);
-        values.put(Meeting.KEY_DATE_TIME, meeting.dateTime);
+        values.put(Meeting.KEY_DATE, meeting.date);
+        values.put(Meeting.KEY_TIME, meeting.time);
 
         db.insert(Meeting.TABLE, null, values);
         db.close();
@@ -45,7 +46,8 @@ public class MeetingRepo {
                 Meeting m = new Meeting();
                 m.name = cursor.getString(cursor.getColumnIndex(Meeting.KEY_NAME));
                 m.description = cursor.getString(cursor.getColumnIndex(Meeting.KEY_DESCRIPTION));
-                m.dateTime = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Meeting.KEY_DATE_TIME)));
+                m.date = cursor.getString(cursor.getColumnIndex(Meeting.KEY_DATE));
+                m.time = cursor.getString(cursor.getColumnIndex(Meeting.KEY_TIME));
                 m.location = cursor.getString(cursor.getColumnIndex(Meeting.KEY_LOCATION));
                 m.meetingID = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Meeting.KEY_ID)));
                 meetingList.add(m);
@@ -59,8 +61,7 @@ public class MeetingRepo {
 
     public ArrayList<Meeting> getPastMeetingList() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT * FROM " + Meeting.TABLE +  " WHERE "  +  Meeting.KEY_DATE_TIME
-                + " < " + System.currentTimeMillis() + ";";
+        String selectQuery = "SELECT * FROM " + Meeting.TABLE + ";";
 
         ArrayList<Meeting> meetingList = new ArrayList<>();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -70,7 +71,8 @@ public class MeetingRepo {
                 Meeting m = new Meeting();
                 m.name = cursor.getString(cursor.getColumnIndex(Meeting.KEY_NAME));
                 m.description = cursor.getString(cursor.getColumnIndex(Meeting.KEY_DESCRIPTION));
-                m.dateTime = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Meeting.KEY_DATE_TIME)));
+                m.date = cursor.getString(cursor.getColumnIndex(Meeting.KEY_DATE));
+                m.time = cursor.getString(cursor.getColumnIndex(Meeting.KEY_TIME));
                 m.location = cursor.getString(cursor.getColumnIndex(Meeting.KEY_LOCATION));
                 m.meetingID = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Meeting.KEY_ID)));
                 meetingList.add(m);
@@ -81,6 +83,7 @@ public class MeetingRepo {
         return meetingList;
     }
 
+    /*
     public ArrayList<Meeting> getPastMeetingList2() {
         ArrayList<Meeting> allMeetings = getMeetingList();
         ArrayList<Meeting> pastMeetings = new ArrayList<>();
@@ -92,5 +95,5 @@ public class MeetingRepo {
         }
         return pastMeetings;
     }
-
+    */
 }

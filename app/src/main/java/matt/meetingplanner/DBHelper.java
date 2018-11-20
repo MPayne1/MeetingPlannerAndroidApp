@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "meetingplanner.db";
 
     public DBHelper(Context context) {
@@ -20,7 +20,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 + Meeting.KEY_NAME + " TEXT, "
                 + Meeting.KEY_DESCRIPTION + " TEXT, "
                 + Meeting.KEY_LOCATION + " TEXT, "
-                + Meeting.KEY_DATE_TIME + " INTEGER );";
+                + Meeting.KEY_DATE + " TEXT,"
+                + Meeting.KEY_TIME + " TEXT );";
         db.execSQL(CREATE_TABLE_MEETING);
     }
 
