@@ -65,8 +65,8 @@ public class CreateMeetingFragment extends Fragment{
         final DatePickerDialog StartTime = new DatePickerDialog(this.getContext(), R.style.DatePickerTheme ,new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                String FormattedDate = getString(R.string.dateFormatted, dayOfMonth, monthOfYear, year);
+                newDate.set(year, monthOfYear + 1, dayOfMonth);
+                String FormattedDate = getString(R.string.dateFormatted, dayOfMonth, monthOfYear + 1, year);
                 textDate.setText(FormattedDate);
             }
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
