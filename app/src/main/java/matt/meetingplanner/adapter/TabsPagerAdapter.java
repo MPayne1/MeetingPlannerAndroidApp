@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import matt.meetingplanner.CreateMeetingFragment;
+import matt.meetingplanner.FutureMeetingsFragment;
 import matt.meetingplanner.PastMeetings;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
@@ -20,12 +21,14 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
                 return new CreateMeetingFragment();
             case 1:
                 return new PastMeetings();
+            case 2:
+                return new FutureMeetingsFragment();
         }
         return null;
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 }

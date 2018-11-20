@@ -13,4 +13,5 @@
     <string name="submitMeeting">Submit</string>
     <string name="createMeeting">Create Meeting</string>
     <string name="pastMeetings">Past Meetings</string>
+    <string name="futureMeetings">Upcoming Meetings </string>
 </resources>

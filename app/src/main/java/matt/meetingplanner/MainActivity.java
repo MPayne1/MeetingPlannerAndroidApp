@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText(R.string.createMeeting));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.pastMeetings));
-        // TODO add new tab for upcoming meetings
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.futureMeetings));
+
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 
