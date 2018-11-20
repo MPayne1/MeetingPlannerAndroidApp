@@ -14,4 +14,5 @@
     <string name="createMeeting">Create Meeting</string>
     <string name="pastMeetings">Past Meetings</string>
     <string name="futureMeetings">Upcoming Meetings </string>
+    <string name="settingsTitle">Settings</string>
 </resources>

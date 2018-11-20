@@ -4,4 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="meetingDetailsTextSize">20sp</dimen>
     <dimen name="roundedBtnRadius">16dp</dimen>
+    <dimen name="defaultTextSize">20sp</dimen>
+    <dimen name="smallTextSize">15sp</dimen>
+    <dimen name="largeTextSize">25sp</dimen>
 </resources>

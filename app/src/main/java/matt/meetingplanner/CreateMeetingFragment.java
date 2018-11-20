@@ -49,6 +49,8 @@ public class CreateMeetingFragment extends Fragment{
 
                 repo.insert(meeting);
                 Toast.makeText(getActivity().getApplicationContext(), "Meeting Created", Toast.LENGTH_SHORT).show();
+                name.setText(null);
+                description.setText(null);
             }
         });
         return view;
