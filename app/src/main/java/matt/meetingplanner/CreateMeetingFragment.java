@@ -28,63 +28,20 @@ public class CreateMeetingFragment extends Fragment{
     TextView location;
     Meeting meeting = new Meeting();
     Button addLocationBtn;
+    Button submitBtn;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.create_meeting_fragment, container,false);
 
         setUpDatePicker();
         setUpTimePicker();
-        Button submitBtn = (Button) view.findViewById(R.id.submitBtn);
-        addLocationBtn = (Button) view.findViewById(R.id.addLocationBtn);
-        name = (EditText) view.findViewById(R.id.meetingName);
-        description = (EditText) view.findViewById(R.id.meetingDesc);
-        date = (TextView) view.findViewById(R.id.textDate);
-        time = (TextView) view.findViewById(R.id.textTime);
-        location = (TextView) view.findViewById(R.id.locationText);
-        attendees = (EditText) view.findViewById(R.id.meetingAttendees);
-        MeetingRepo repo = new MeetingRepo(view.getContext());
-        Meeting mostRecent = repo.getMostRecentlyCreatedMeeting();
-        attendees.setText(mostRecent.attendees);
+
+        setUpViewComponents(view);
+
+        setUpSubmitBtn();
+        setUpLocationBtn();
 
 
-
-        submitBtn.setOnClickListener( new View.OnClickListener()
-        {
-            @Override
-            public void onClick (View v){
-                MeetingRepo repo = new MeetingRepo(view.getContext());
-
-                Log.d("FormFilled", name.getText().toString());
-                Log.d("FormFilled", description.getText().toString());
-                Log.d("FormFilled", date.getText().toString());
-                Log.d("FormFilled", time.getText().toString());
-                // TODO check properly if form is filled in
-                if(isFormFilled()) {
-                    meeting.name = name.getText().toString();
-                    meeting.description = description.getText().toString();
-                    meeting.date = date.getText().toString();
-                    meeting.time = time.getText().toString();
-                    meeting.attendees = attendees.getText().toString();
-                    repo.insert(meeting);
-                    Toast.makeText(getActivity().getApplicationContext(), getContext().getString(R.string.meetingCreated), Toast.LENGTH_SHORT).show();
-                    name.setText(null);
-                    description.setText(null);
-                    time.setText(null);
-                    date.setText(null);
-                    location.setText(null);
-                } else {
-                    Toast.makeText(getActivity().getApplicationContext(), getContext().getString(R.string.formFilled), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        addLocationBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), MapsActivity.class);
-                startActivityForResult(intent, 10);
-            }
-        });
         return view;
     }
 
@@ -161,5 +118,61 @@ public class CreateMeetingFragment extends Fragment{
                location.setText(loc);
             }
 
+    }
+
+    public void setUpSubmitBtn() {
+        submitBtn.setOnClickListener( new View.OnClickListener()
+        {
+            @Override
+            public void onClick (View v){
+                MeetingRepo repo = new MeetingRepo(view.getContext());
+
+                Log.d("FormFilled", name.getText().toString());
+                Log.d("FormFilled", description.getText().toString());
+                Log.d("FormFilled", date.getText().toString());
+                Log.d("FormFilled", time.getText().toString());
+                // TODO check properly if form is filled in
+                if(isFormFilled()) {
+                    meeting.name = name.getText().toString();
+                    meeting.description = description.getText().toString();
+                    meeting.date = date.getText().toString();
+                    meeting.time = time.getText().toString();
+                    meeting.attendees = attendees.getText().toString();
+                    repo.insert(meeting);
+                    Toast.makeText(getActivity().getApplicationContext(), getContext().getString(R.string.meetingCreated), Toast.LENGTH_SHORT).show();
+                    name.setText(null);
+                    description.setText(null);
+                    time.setText(null);
+                    date.setText(null);
+                    location.setText(null);
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), getContext().getString(R.string.formFilled), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    public void setUpLocationBtn() {
+        addLocationBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MapsActivity.class);
+                startActivityForResult(intent, 10);
+            }
+        });
+    }
+
+    public void setUpViewComponents(View view){
+        submitBtn = (Button) view.findViewById(R.id.submitBtn);
+        addLocationBtn = (Button) view.findViewById(R.id.addLocationBtn);
+        name = (EditText) view.findViewById(R.id.meetingName);
+        description = (EditText) view.findViewById(R.id.meetingDesc);
+        date = (TextView) view.findViewById(R.id.textDate);
+        time = (TextView) view.findViewById(R.id.textTime);
+        location = (TextView) view.findViewById(R.id.locationText);
+        attendees = (EditText) view.findViewById(R.id.meetingAttendees);
+        MeetingRepo repo = new MeetingRepo(view.getContext());
+        Meeting mostRecent = repo.getMostRecentlyCreatedMeeting();
+        attendees.setText(mostRecent.attendees);
     }
 }
