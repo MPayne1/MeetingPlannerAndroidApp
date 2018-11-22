@@ -49,14 +49,7 @@ public class MeetingRepo {
         if(cursor.moveToFirst()) {
             do {
                 Meeting m = new Meeting();
-                m.name = cursor.getString(cursor.getColumnIndex(Meeting.KEY_NAME));
-                m.description = cursor.getString(cursor.getColumnIndex(Meeting.KEY_DESCRIPTION));
-                m.date = cursor.getString(cursor.getColumnIndex(Meeting.KEY_DATE));
-                m.time = cursor.getString(cursor.getColumnIndex(Meeting.KEY_TIME));
-                m.location = cursor.getString(cursor.getColumnIndex(Meeting.KEY_LOCATION));
-                m.attendees = cursor.getString(cursor.getColumnIndex(Meeting.KEY_ATTENDEES));
-                m.meetingID = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Meeting.KEY_ID)));
-                meetingList.add(m);
+                meetingList.add(createNewMeeting(m, cursor));
             } while(cursor.moveToNext());
         }
 
@@ -103,6 +96,7 @@ public class MeetingRepo {
         return futureMeetings;
     }
 
+    // Get the most recent meeting, for the attendees autocomplete
     public Meeting getMostRecentlyCreatedMeeting() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + Meeting.TABLE +";";
@@ -112,16 +106,8 @@ public class MeetingRepo {
         Meeting m = new Meeting();
 
         if(cursor.moveToLast()) {
-                m.name = cursor.getString(cursor.getColumnIndex(Meeting.KEY_NAME));
-                m.description = cursor.getString(cursor.getColumnIndex(Meeting.KEY_DESCRIPTION));
-                m.date = cursor.getString(cursor.getColumnIndex(Meeting.KEY_DATE));
-                m.time = cursor.getString(cursor.getColumnIndex(Meeting.KEY_TIME));
-                m.location = cursor.getString(cursor.getColumnIndex(Meeting.KEY_LOCATION));
-                m.attendees = cursor.getString(cursor.getColumnIndex(Meeting.KEY_ATTENDEES));
-                m.meetingID = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Meeting.KEY_ID)));
-
+            createNewMeeting(m, cursor);
         }
-
         cursor.close();
         db.close();
         return m;
@@ -142,4 +128,17 @@ public class MeetingRepo {
         return timeInMilliseconds;
     }
 
+    // Add all relevant data to new meeting object
+    private Meeting createNewMeeting(Meeting m, Cursor cursor) {
+        m.name = cursor.getString(cursor.getColumnIndex(Meeting.KEY_NAME));
+        m.description = cursor.getString(cursor.getColumnIndex(Meeting.KEY_DESCRIPTION));
+        m.date = cursor.getString(cursor.getColumnIndex(Meeting.KEY_DATE));
+        m.time = cursor.getString(cursor.getColumnIndex(Meeting.KEY_TIME));
+        m.location = cursor.getString(cursor.getColumnIndex(Meeting.KEY_LOCATION));
+        m.attendees = cursor.getString(cursor.getColumnIndex(Meeting.KEY_ATTENDEES));
+        m.meetingID = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Meeting.KEY_ID)));
+
+        return m;
+    }
 }
+

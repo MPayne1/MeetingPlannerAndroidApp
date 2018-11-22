@@ -29,6 +29,7 @@ public class CreateMeetingFragment extends Fragment{
     Meeting meeting = new Meeting();
     Button addLocationBtn;
     Button submitBtn;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.create_meeting_fragment, container,false);
@@ -49,6 +50,7 @@ public class CreateMeetingFragment extends Fragment{
 
 
     // TODO Date needs formatting properly
+    // // Setup the date picker and handle the result
     public void setUpDatePicker() {
         final TextView textDate = (TextView) view.findViewById(R.id.textDate);
         final Calendar newCalendar = Calendar.getInstance();
@@ -71,6 +73,7 @@ public class CreateMeetingFragment extends Fragment{
         });
     }
 
+    // Setup the time picker and handle the result
     public void setUpTimePicker() {
         final TextView textTime = (TextView) view.findViewById(R.id.textTime);
         textTime.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +98,7 @@ public class CreateMeetingFragment extends Fragment{
         });
     }
 
+    // Check the form is all filled before it can be submitted
     public boolean isFormFilled() {
         boolean formComplete = false;
         if(name.getText().length() >0  && description.getText().length() >0
@@ -109,7 +113,7 @@ public class CreateMeetingFragment extends Fragment{
         return formComplete;
     }
 
-
+    // Handle the result from the maps activity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
             if (data.hasExtra("location")) {
@@ -119,7 +123,7 @@ public class CreateMeetingFragment extends Fragment{
             }
 
     }
-
+    // Create the submit button's onClickListener
     public void setUpSubmitBtn() {
         submitBtn.setOnClickListener( new View.OnClickListener()
         {
@@ -152,6 +156,7 @@ public class CreateMeetingFragment extends Fragment{
         });
     }
 
+    // Create the location button's onClickListener
     public void setUpLocationBtn() {
         addLocationBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -162,6 +167,7 @@ public class CreateMeetingFragment extends Fragment{
         });
     }
 
+    // Setup the componenets on the view
     public void setUpViewComponents(View view){
         submitBtn = (Button) view.findViewById(R.id.submitBtn);
         addLocationBtn = (Button) view.findViewById(R.id.addLocationBtn);
