@@ -84,6 +84,22 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         />
 
+    <EditText
+        android:id="@+id/meetingAttendees"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/defaultTextSize"
+        android:layout_below="@+id/textTime"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:inputType="textAutoComplete"
+        android:hint="@string/attendeesHint"
+        android:maxLength="200"
+    />
+
     <!-- TODO add location field-->
     <!-- TODO add attendees -->
     <!-- TODO make button subtly change when pressed   -->
@@ -93,7 +109,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/submitMeeting"
-        android:layout_below="@id/textTime"
+        android:layout_alignParentBottom="true"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:textStyle="bold"

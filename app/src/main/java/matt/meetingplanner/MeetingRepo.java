@@ -22,7 +22,7 @@ public class MeetingRepo {
         dbHelper = new DBHelper(context);
     }
 
-    // insert new meeting
+    // Insert new meeting
     public void insert(Meeting meeting) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -31,15 +31,13 @@ public class MeetingRepo {
         values.put(Meeting.KEY_LOCATION, meeting.location);
         values.put(Meeting.KEY_DATE, meeting.date);
         values.put(Meeting.KEY_TIME, meeting.time);
-
+        values.put(Meeting.KEY_ATTENDEES, meeting.attendees);
         db.insert(Meeting.TABLE, null, values);
         db.close();
     }
 
 
     // get list of all meetings
-    // TODO change so only get past meetings
-    // TODO make new method to get future meetings
     public ArrayList<Meeting> getMeetingList() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + Meeting.TABLE +";";
@@ -56,6 +54,7 @@ public class MeetingRepo {
                 m.date = cursor.getString(cursor.getColumnIndex(Meeting.KEY_DATE));
                 m.time = cursor.getString(cursor.getColumnIndex(Meeting.KEY_TIME));
                 m.location = cursor.getString(cursor.getColumnIndex(Meeting.KEY_LOCATION));
+                m.attendees = cursor.getString(cursor.getColumnIndex(Meeting.KEY_ATTENDEES));
                 m.meetingID = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Meeting.KEY_ID)));
                 meetingList.add(m);
             } while(cursor.moveToNext());
@@ -66,6 +65,7 @@ public class MeetingRepo {
         return meetingList;
     }
 
+    // Get list of all past meetings
     public ArrayList<Meeting> getPastMeetingList() {
         ArrayList<Meeting> meetingList= getMeetingList();
         ArrayList<Meeting> pastMeetings = new ArrayList<>();
@@ -84,7 +84,7 @@ public class MeetingRepo {
         return pastMeetings;
     }
 
-
+    // Get list of all future meetings
     public ArrayList<Meeting> getFutureMeetingList() {
         ArrayList<Meeting> meetingList= getMeetingList();
         ArrayList<Meeting> futureMeetings = new ArrayList<>();
@@ -103,6 +103,30 @@ public class MeetingRepo {
         return futureMeetings;
     }
 
+    public Meeting getMostRecentlyCreatedMeeting() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + Meeting.TABLE +";";
+
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        Meeting m = new Meeting();
+
+        if(cursor.moveToLast()) {
+                m.name = cursor.getString(cursor.getColumnIndex(Meeting.KEY_NAME));
+                m.description = cursor.getString(cursor.getColumnIndex(Meeting.KEY_DESCRIPTION));
+                m.date = cursor.getString(cursor.getColumnIndex(Meeting.KEY_DATE));
+                m.time = cursor.getString(cursor.getColumnIndex(Meeting.KEY_TIME));
+                m.location = cursor.getString(cursor.getColumnIndex(Meeting.KEY_LOCATION));
+                m.attendees = cursor.getString(cursor.getColumnIndex(Meeting.KEY_ATTENDEES));
+                m.meetingID = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Meeting.KEY_ID)));
+
+        }
+
+        cursor.close();
+        db.close();
+        return m;
+    }
+
     private long dateTimeConvert(String date, String time) {
         long timeInMilliseconds =0 ;
         String givenDateString = date + " " + time;
@@ -117,4 +141,5 @@ public class MeetingRepo {
         }
         return timeInMilliseconds;
     }
+
 }

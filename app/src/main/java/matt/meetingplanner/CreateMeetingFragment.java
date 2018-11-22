@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ public class CreateMeetingFragment extends Fragment{
     EditText description;
     TextView date;
     TextView time;
+    EditText attendees;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.create_meeting_fragment, container,false);
@@ -34,6 +36,12 @@ public class CreateMeetingFragment extends Fragment{
         description = (EditText) view.findViewById(R.id.meetingDesc);
         date = (TextView) view.findViewById(R.id.textDate);
         time = (TextView) view.findViewById(R.id.textTime);
+        attendees = (EditText) view.findViewById(R.id.meetingAttendees);
+        MeetingRepo repo = new MeetingRepo(view.getContext());
+        Meeting mostRecent = repo.getMostRecentlyCreatedMeeting();
+        attendees.setText(mostRecent.attendees);
+
+
 
         submitBtn.setOnClickListener( new View.OnClickListener()
         {
@@ -41,17 +49,28 @@ public class CreateMeetingFragment extends Fragment{
             public void onClick (View v){
                 MeetingRepo repo = new MeetingRepo(view.getContext());
                 Meeting meeting = new Meeting();
+                Log.d("FormFilled", name.getText().toString());
+                Log.d("FormFilled", description.getText().toString());
+                Log.d("FormFilled", date.getText().toString());
+                Log.d("FormFilled", time.getText().toString());
+                if(isFormFilled()) {
+                    meeting.name = name.getText().toString();
+                    meeting.description = description.getText().toString();
+                    meeting.date = date.getText().toString();
+                    meeting.time = time.getText().toString();
+                    meeting.location = "location 1";
+                    meeting.attendees = attendees.getText().toString();
 
-                meeting.name = name.getText().toString();
-                meeting.description = description.getText().toString();
-                meeting.date = date.getText().toString();
-                meeting.time = time.getText().toString();
-                meeting.location = "location 1";
+                    repo.insert(meeting);
+                    Toast.makeText(getActivity().getApplicationContext(), "@string/meetingCreated", Toast.LENGTH_SHORT).show();
+                    name.setText(null);
+                    description.setText(null);
+                    time.setText(null);
+                    date.setText(null);
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "@string/formFilled", Toast.LENGTH_SHORT).show();
+                }
 
-                repo.insert(meeting);
-                Toast.makeText(getActivity().getApplicationContext(), "Meeting Created", Toast.LENGTH_SHORT).show();
-                name.setText(null);
-                description.setText(null);
             }
         });
         return view;
@@ -105,5 +124,19 @@ public class CreateMeetingFragment extends Fragment{
                 timePicker.show();
             }
         });
+    }
+
+    public boolean isFormFilled() {
+        boolean formComplete = false;
+        if(name.getText().toString() != null && description.getText().toString() != null
+                && date.getText().toString() != null && time.getText().toString() != null) {
+
+            Log.d("FormFilled", name.getText().toString());
+            Log.d("FormFilled", description.getText().toString());
+            Log.d("FormFilled", date.getText().toString());
+            Log.d("FormFilled", time.getText().toString());
+            formComplete = true;
+        }
+        return formComplete;
     }
 }

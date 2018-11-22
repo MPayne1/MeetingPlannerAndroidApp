@@ -1,5 +1,7 @@
 package matt.meetingplanner;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -9,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import matt.meetingplanner.adapter.TabsPagerAdapter;
 
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                hideKeyboardFrom(getBaseContext() ,(View)findViewById(R.id.activity_main));
             }
 
             @Override
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                hideKeyboardFrom(getBaseContext() ,(View)findViewById(R.id.activity_main));
             }
 
         });
@@ -70,7 +76,10 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-
-
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        view.clearFocus();
+    }
 }
 

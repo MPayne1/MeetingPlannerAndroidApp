@@ -56,5 +56,13 @@
         android:textSize="@dimen/defaultTextSize"
         />
 
+    <TextView
+        android:id="@+id/meeting_list_attendees"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:textSize="@dimen/defaultTextSize"
+        />
 
 </LinearLayout>

@@ -48,7 +48,7 @@ public class MeetingListAdapter extends BaseAdapter {
             holder.time = (TextView) view.findViewById(R.id.meeting_list_time);
             holder.date = (TextView) view.findViewById(R.id.meeting_list_date);
             holder.id = (TextView) view.findViewById(R.id.meeting_list_id);
-
+            holder.attendees = (TextView) view.findViewById(R.id.meeting_list_attendees);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
@@ -58,12 +58,13 @@ public class MeetingListAdapter extends BaseAdapter {
         holder.location.setText(meetingList.get(position).location);
         holder.time.setText(meetingList.get(position).time);
         holder.date.setText(meetingList.get(position).date);
+        holder.attendees.setText(meetingList.get(position).attendees);
         //holder.id.setText(meetingList.get(position).meetingID);
 
         return view;
     }
 
     static class ViewHolder{
-        TextView meetingName, meetingDescription, location, date, time, id;
+        TextView meetingName, meetingDescription, location, date, time, id, attendees;
     }
 }

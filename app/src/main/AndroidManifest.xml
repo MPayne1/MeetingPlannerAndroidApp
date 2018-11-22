@@ -10,13 +10,14 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         >
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Settings" android:label="@string/settingsTitle"/>
     </application>
 
 </manifest>
