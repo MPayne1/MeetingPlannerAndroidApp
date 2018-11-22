@@ -20,12 +20,13 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:textAlignment="center"
         android:text="@string/enterDetails"
-        />
+    />
 
     <EditText
         android:id="@+id/meetingName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:singleLine="false"
         android:layout_centerHorizontal="true"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/defaultTextSize"
@@ -36,13 +37,14 @@
         android:inputType="textAutoComplete"
         android:hint="@string/meetingName"
         android:maxLength="30"
-        />
+    />
 
     <EditText
         android:id="@+id/meetingDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:singleLine="false"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/defaultTextSize"
         android:layout_below="@+id/meetingName"
@@ -52,13 +54,19 @@
         android:inputType="textAutoComplete"
         android:hint="@string/meetingDesc"
         android:maxLength="100"
-        />
+    />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/meetingDesc"
+    android:id="@+id/dateTimeLinear"
+    android:layout_centerHorizontal="true"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/textDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:hint="@string/dateText"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/defaultTextSize"
@@ -67,31 +75,31 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        />
+    />
 
     <TextView
         android:id="@+id/textTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:hint="@string/timeText"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/defaultTextSize"
         android:textAlignment="center"
-        android:layout_below="@+id/textDate"
+        android:layout_below="@id/meetingDesc"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        />
-
+    />
+</LinearLayout>
     <EditText
         android:id="@+id/meetingAttendees"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:singleLine="false"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/defaultTextSize"
-        android:layout_below="@+id/textTime"
+        android:layout_below="@+id/dateTimeLinear"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
@@ -100,8 +108,36 @@
         android:maxLength="200"
     />
 
+    <Button
+        android:id="@+id/addLocationBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/addLocation"
+        android:layout_below="@+id/meetingAttendees"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:textAlignment="center"
+        android:background="@drawable/roundedcornersbtn"
+    />
+
+    <TextView
+        android:id="@+id/locationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/locationText"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/defaultTextSize"
+        android:textAlignment="center"
+        android:layout_below="@+id/addLocationBtn"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+    />
     <!-- TODO add location field-->
-    <!-- TODO add attendees -->
     <!-- TODO make button subtly change when pressed   -->
     <Button
         android:id="@+id/submitBtn"
@@ -116,6 +152,7 @@
         android:textAllCaps="false"
         android:textAlignment="center"
         android:background="@drawable/roundedcornersbtn"
-        />
+    />
+
 
 </RelativeLayout>

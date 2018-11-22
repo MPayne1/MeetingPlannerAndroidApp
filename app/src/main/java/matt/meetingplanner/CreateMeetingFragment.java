@@ -2,6 +2,7 @@ package matt.meetingplanner;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,9 @@ public class CreateMeetingFragment extends Fragment{
     TextView date;
     TextView time;
     EditText attendees;
+    TextView location;
+    Meeting meeting = new Meeting();
+    Button addLocationBtn;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.create_meeting_fragment, container,false);
@@ -31,11 +35,12 @@ public class CreateMeetingFragment extends Fragment{
         setUpDatePicker();
         setUpTimePicker();
         Button submitBtn = (Button) view.findViewById(R.id.submitBtn);
-
+        addLocationBtn = (Button) view.findViewById(R.id.addLocationBtn);
         name = (EditText) view.findViewById(R.id.meetingName);
         description = (EditText) view.findViewById(R.id.meetingDesc);
         date = (TextView) view.findViewById(R.id.textDate);
         time = (TextView) view.findViewById(R.id.textTime);
+        location = (TextView) view.findViewById(R.id.locationText);
         attendees = (EditText) view.findViewById(R.id.meetingAttendees);
         MeetingRepo repo = new MeetingRepo(view.getContext());
         Meeting mostRecent = repo.getMostRecentlyCreatedMeeting();
@@ -48,29 +53,36 @@ public class CreateMeetingFragment extends Fragment{
             @Override
             public void onClick (View v){
                 MeetingRepo repo = new MeetingRepo(view.getContext());
-                Meeting meeting = new Meeting();
+
                 Log.d("FormFilled", name.getText().toString());
                 Log.d("FormFilled", description.getText().toString());
                 Log.d("FormFilled", date.getText().toString());
                 Log.d("FormFilled", time.getText().toString());
+                // TODO check properly if form is filled in
                 if(isFormFilled()) {
                     meeting.name = name.getText().toString();
                     meeting.description = description.getText().toString();
                     meeting.date = date.getText().toString();
                     meeting.time = time.getText().toString();
-                    meeting.location = "location 1";
                     meeting.attendees = attendees.getText().toString();
-
                     repo.insert(meeting);
-                    Toast.makeText(getActivity().getApplicationContext(), "@string/meetingCreated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), getContext().getString(R.string.meetingCreated), Toast.LENGTH_SHORT).show();
                     name.setText(null);
                     description.setText(null);
                     time.setText(null);
                     date.setText(null);
+                    location.setText(null);
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "@string/formFilled", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), getContext().getString(R.string.formFilled), Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
 
+        addLocationBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MapsActivity.class);
+                startActivityForResult(intent, 10);
             }
         });
         return view;
@@ -128,8 +140,8 @@ public class CreateMeetingFragment extends Fragment{
 
     public boolean isFormFilled() {
         boolean formComplete = false;
-        if(name.getText().toString() != null && description.getText().toString() != null
-                && date.getText().toString() != null && time.getText().toString() != null) {
+        if(name.getText().length() >0  && description.getText().length() >0
+                && date.getText().length() >0  && time.getText().length() >0 && location.getText().length() > 0) {
 
             Log.d("FormFilled", name.getText().toString());
             Log.d("FormFilled", description.getText().toString());
@@ -138,5 +150,16 @@ public class CreateMeetingFragment extends Fragment{
             formComplete = true;
         }
         return formComplete;
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+            if (data.hasExtra("location")) {
+                String loc = data.getExtras().getString("location");
+               meeting.location = loc;
+               location.setText(loc);
+            }
+
     }
 }

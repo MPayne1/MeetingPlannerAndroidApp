@@ -21,4 +21,7 @@
     <string name="formFilled">Please Fill in all sections of the form</string>
     <string name="meetingCreated">Meeting Created</string>
     <string name="attendeesHint">Enter Attendees</string>
+    <string name="addLocation">Add Location</string>
+    <string name="locationText">Location</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
