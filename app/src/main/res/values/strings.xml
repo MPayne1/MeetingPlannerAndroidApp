@@ -15,4 +15,7 @@
     <string name="pastMeetings">Past Meetings</string>
     <string name="futureMeetings">Upcoming Meetings </string>
     <string name="settingsTitle">Settings</string>
+    <string name="smallTextSize">Small Text</string>
+    <string name="defaultTextSize">Default Text</string>
+    <string name="largeTextSize">Large Text</string>
 </resources>

@@ -52,11 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-
-
-
     }
-
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -67,11 +63,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Intent intent = new Intent(this, Settings.class);
+                Intent intent = new Intent(android.provider.Settings.ACTION_DISPLAY_SETTINGS);
                 startActivity(intent);
                 return true;
         }
         return false;
     }
+
+
+
 }
 

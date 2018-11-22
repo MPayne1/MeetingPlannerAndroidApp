@@ -25,6 +25,7 @@ public class CreateMeetingFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.create_meeting_fragment, container,false);
+
         setUpDatePicker();
         setUpTimePicker();
         Button submitBtn = (Button) view.findViewById(R.id.submitBtn);
