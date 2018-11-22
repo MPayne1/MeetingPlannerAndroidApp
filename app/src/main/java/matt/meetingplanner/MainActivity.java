@@ -25,38 +25,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.createMeeting));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.pastMeetings));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.futureMeetings));
+        setupTabs();
 
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-
-        TabsPagerAdapter adapter = new TabsPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-                hideKeyboardFrom(getBaseContext() ,(View)findViewById(R.id.activity_main));
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-                hideKeyboardFrom(getBaseContext() ,(View)findViewById(R.id.activity_main));
-            }
-
-        });
 
     }
 
@@ -80,6 +50,41 @@ public class MainActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         view.clearFocus();
+    }
+
+    public void setupTabs() {
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.createMeeting));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.pastMeetings));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.futureMeetings));
+
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+
+        TabsPagerAdapter adapter = new TabsPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                hideKeyboardFrom(getBaseContext() ,findViewById(R.id.activity_main));
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                hideKeyboardFrom(getBaseContext() ,findViewById(R.id.activity_main));
+            }
+
+        });
     }
 }
 

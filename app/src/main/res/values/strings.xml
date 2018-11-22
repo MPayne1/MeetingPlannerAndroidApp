@@ -14,10 +14,6 @@
     <string name="createMeeting">Create Meeting</string>
     <string name="pastMeetings">Past Meetings</string>
     <string name="futureMeetings">Upcoming Meetings </string>
-    <string name="settingsTitle">Settings</string>
-    <string name="smallTextSize">Small Text</string>
-    <string name="defaultTextSize">Default Text</string>
-    <string name="largeTextSize">Large Text</string>
     <string name="formFilled">Please Fill in all sections of the form</string>
     <string name="meetingCreated">Meeting Created</string>
     <string name="attendeesHint">Enter Attendees</string>

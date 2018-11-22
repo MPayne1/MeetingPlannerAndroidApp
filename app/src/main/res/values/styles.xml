@@ -20,19 +20,8 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-
     <style name="MyTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
-    </style>
-
-    <style name="smallTextTheme" >
-        <item name="android:textSize">15sp</item>
-    </style>
-    <style name="mediummTextTheme" >
-        <item name="android:textSize">20sp</item>
-    </style>
-    <style name="largeTextTheme" >
-        <item name="android:textSize">25sp</item>
     </style>
 
 </resources>
