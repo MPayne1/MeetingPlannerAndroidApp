@@ -20,9 +20,9 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new CreateMeetingFragment();
             case 1:
-                return new PastMeetings();
-            case 2:
                 return new FutureMeetingsFragment();
+            case 2:
+                return new PastMeetings();
         }
         return null;
     }

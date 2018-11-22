@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText(R.string.createMeeting));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.pastMeetings));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.futureMeetings));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.pastMeetings));
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
