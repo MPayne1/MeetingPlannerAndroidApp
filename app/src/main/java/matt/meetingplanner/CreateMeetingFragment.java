@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.icu.util.Calendar;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,6 +19,11 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.List;
+import java.util.Locale;
+
 public class CreateMeetingFragment extends Fragment{
 
     private View view;
@@ -27,9 +34,9 @@ public class CreateMeetingFragment extends Fragment{
     EditText attendees;
     TextView location;
     Meeting meeting = new Meeting();
-    Button addLocationBtn;
     Button submitBtn;
-
+    LatLng LatLngLocation = null;
+    String strLocation;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.create_meeting_fragment, container,false);
@@ -42,11 +49,8 @@ public class CreateMeetingFragment extends Fragment{
         setUpSubmitBtn();
         setUpLocationBtn();
 
-
         return view;
     }
-
-
 
 
     // TODO Date needs formatting properly
@@ -117,11 +121,12 @@ public class CreateMeetingFragment extends Fragment{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
             if (data.hasExtra("location")) {
-                String loc = data.getExtras().getString("location");
-               meeting.location = loc;
-               location.setText(loc);
+                LatLng loc = (LatLng) data.getExtras().get("location");
+                LatLngLocation = loc;
+                meeting.location = loc.toString();
+                strLocation = getAddress(loc);
+                location.setText(strLocation);
             }
-
     }
     // Create the submit button's onClickListener
     public void setUpSubmitBtn() {
@@ -130,18 +135,13 @@ public class CreateMeetingFragment extends Fragment{
             @Override
             public void onClick (View v){
                 MeetingRepo repo = new MeetingRepo(view.getContext());
-
-                Log.d("FormFilled", name.getText().toString());
-                Log.d("FormFilled", description.getText().toString());
-                Log.d("FormFilled", date.getText().toString());
-                Log.d("FormFilled", time.getText().toString());
-                // TODO check properly if form is filled in
                 if(isFormFilled()) {
                     meeting.name = name.getText().toString();
                     meeting.description = description.getText().toString();
                     meeting.date = date.getText().toString();
                     meeting.time = time.getText().toString();
                     meeting.attendees = attendees.getText().toString();
+                    meeting.strLocation = strLocation;
                     repo.insert(meeting);
                     Toast.makeText(getActivity().getApplicationContext(), getContext().getString(R.string.meetingCreated), Toast.LENGTH_SHORT).show();
                     name.setText(null);
@@ -158,10 +158,11 @@ public class CreateMeetingFragment extends Fragment{
 
     // Create the location button's onClickListener
     public void setUpLocationBtn() {
-        addLocationBtn.setOnClickListener(new View.OnClickListener(){
+        location.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), MapsActivity.class);
+                if(LatLngLocation != null) intent.putExtra("location", LatLngLocation);
                 startActivityForResult(intent, 10);
             }
         });
@@ -170,7 +171,6 @@ public class CreateMeetingFragment extends Fragment{
     // Setup the componenets on the view
     public void setUpViewComponents(View view){
         submitBtn = (Button) view.findViewById(R.id.submitBtn);
-        addLocationBtn = (Button) view.findViewById(R.id.addLocationBtn);
         name = (EditText) view.findViewById(R.id.meetingName);
         description = (EditText) view.findViewById(R.id.meetingDesc);
         date = (TextView) view.findViewById(R.id.textDate);
@@ -180,5 +180,27 @@ public class CreateMeetingFragment extends Fragment{
         MeetingRepo repo = new MeetingRepo(view.getContext());
         Meeting mostRecent = repo.getMostRecentlyCreatedMeeting();
         attendees.setText(mostRecent.attendees);
+    }
+
+    // Get the address of the meeting location, better for usability than latlng
+    public String getAddress(LatLng location) {
+        String strAdd = "";
+        Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+
+        try{
+            List<Address> addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1);
+            if(addresses != null) {
+                Address returnedAddress = addresses.get(0);
+                StringBuilder strReturnedAddress = new StringBuilder("");
+
+                for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+                }
+                strAdd = strReturnedAddress.toString();
+            }
+        } catch (Exception e) {
+
+        }
+        return strAdd;
     }
 }

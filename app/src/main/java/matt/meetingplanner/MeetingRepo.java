@@ -29,6 +29,7 @@ public class MeetingRepo {
         values.put(Meeting.KEY_NAME, meeting.name);
         values.put(Meeting.KEY_DESCRIPTION, meeting.description);
         values.put(Meeting.KEY_LOCATION, meeting.location);
+        values.put(Meeting.KEY_STR_LOCATION, meeting.strLocation);
         values.put(Meeting.KEY_DATE, meeting.date);
         values.put(Meeting.KEY_TIME, meeting.time);
         values.put(Meeting.KEY_ATTENDEES, meeting.attendees);
@@ -135,6 +136,7 @@ public class MeetingRepo {
         m.date = cursor.getString(cursor.getColumnIndex(Meeting.KEY_DATE));
         m.time = cursor.getString(cursor.getColumnIndex(Meeting.KEY_TIME));
         m.location = cursor.getString(cursor.getColumnIndex(Meeting.KEY_LOCATION));
+        m.strLocation = cursor.getString(cursor.getColumnIndex(Meeting.KEY_STR_LOCATION));
         m.attendees = cursor.getString(cursor.getColumnIndex(Meeting.KEY_ATTENDEES));
         m.meetingID = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Meeting.KEY_ID)));
 

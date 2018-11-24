@@ -7,6 +7,7 @@ public class Meeting {
     public static final String KEY_NAME = "name";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_LOCATION = "location";
+    public static final String KEY_STR_LOCATION = "str_Location";
     public static final String KEY_TIME = "time";
     public static final String KEY_DATE = "date";
     public static final String KEY_ID = "id";
@@ -17,6 +18,7 @@ public class Meeting {
     public String name;
     public String description;
     public String location;
+    public String strLocation;
     public String time;
     public String date;
     public String attendees;
