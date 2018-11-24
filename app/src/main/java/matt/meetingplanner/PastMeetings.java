@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -34,6 +35,9 @@ public class PastMeetings  extends Fragment  {
                     startActivity(intent);
                 }
             });
+        } else {
+            TextView noMeetings = (TextView) rootView.findViewById(R.id.noPastMeetings);
+            noMeetings.setVisibility(View.VISIBLE);
         }
 
         return rootView;

@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="roundedBtnRadius">16dp</dimen>
     <dimen name="defaultTextSize">20sp</dimen>
+    <dimen name="listDividerHeight">1dp</dimen>
 </resources>

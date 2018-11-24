@@ -5,7 +5,7 @@
     android:id="@+id/past_meetings_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:theme="@style/AppTheme"
     tools:context="matt.meetingplanner.PastMeetings">
 
     <ListView
@@ -16,6 +16,18 @@
         android:layout_centerHorizontal="true"
         android:theme="@style/AppTheme"
     />
-
+    <TextView
+        android:id="@+id/noPastMeetings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/defaultTextSize"
+        android:textColor="@color/colorPrimary"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:textAlignment="center"
+        android:text="@string/noMeetingsText"
+        android:visibility="gone"
+        />
 
 </RelativeLayout>
