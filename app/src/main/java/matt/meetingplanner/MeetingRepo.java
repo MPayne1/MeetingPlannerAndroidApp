@@ -55,6 +55,14 @@ public class MeetingRepo {
 
     }
 
+
+    // Delete the meeting with id
+    public void deleteMeeting(int id) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        db.delete(Meeting.TABLE, Meeting.KEY_ID + "= ?", new String[] { String.valueOf(id) });
+        db.close();
+    }
     // get list of all meetings
     public ArrayList<Meeting> getMeetingList() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();

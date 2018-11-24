@@ -23,4 +23,9 @@
     <string name="title_activity_maps">Map</string>
     <string name="saveChanges">Save Changes</string>
     <string name="changesSaved">Changes Saved</string>
+    <string name="cancelMeeting">Cancel Meeting</string>
+    <string name="meetingCancelled">Meeting Cancelled</string>
+    <string name="areYouSure">Are you Sure?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>
