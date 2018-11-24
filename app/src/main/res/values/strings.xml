@@ -21,4 +21,6 @@
     <string name="locationText">Choose Location</string>
     <string name="locationSet">Location Set</string>
     <string name="title_activity_maps">Map</string>
+    <string name="saveChanges">Save Changes</string>
+    <string name="changesSaved">Changes Saved</string>
 </resources>

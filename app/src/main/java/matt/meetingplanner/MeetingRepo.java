@@ -37,6 +37,23 @@ public class MeetingRepo {
         db.close();
     }
 
+    // update a meeting with new info
+    public void updateMeeting(Meeting meeting) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Meeting.KEY_NAME, meeting.name);
+        values.put(Meeting.KEY_DESCRIPTION, meeting.description);
+        values.put(Meeting.KEY_LOCATION, meeting.location);
+        values.put(Meeting.KEY_STR_LOCATION, meeting.strLocation);
+        values.put(Meeting.KEY_DATE, meeting.date);
+        values.put(Meeting.KEY_TIME, meeting.time);
+        values.put(Meeting.KEY_ATTENDEES, meeting.attendees);
+
+        db.update(Meeting.TABLE, values, Meeting.KEY_ID + "= ? ", new String[] {String.valueOf(meeting.meetingID)});
+        db.close();
+
+    }
 
     // get list of all meetings
     public ArrayList<Meeting> getMeetingList() {
@@ -158,5 +175,6 @@ public class MeetingRepo {
 
         return m;
     }
+
 }
 
