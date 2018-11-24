@@ -114,6 +114,7 @@ public class MeetingRepo {
         return m;
     }
 
+    // Convert string date time to milliseconds, for comparing
     private long dateTimeConvert(String date, String time) {
         long timeInMilliseconds =0 ;
         String givenDateString = date + " " + time;

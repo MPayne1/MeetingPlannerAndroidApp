@@ -26,16 +26,16 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         setupTabs();
-
-
     }
 
+    // create options menu
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.bar_items, menu);
         return true;
     }
 
+    // setup settings menu
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
@@ -46,12 +46,14 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    // hide keyboard when tab is changed
     public static void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         view.clearFocus();
     }
 
+    // setup the tabs
     public void setupTabs() {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);

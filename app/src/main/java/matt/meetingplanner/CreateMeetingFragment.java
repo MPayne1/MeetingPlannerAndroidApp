@@ -8,7 +8,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +36,7 @@ public class CreateMeetingFragment extends Fragment{
     Button submitBtn;
     LatLng LatLngLocation = null;
     String strLocation;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.create_meeting_fragment, container,false);
@@ -52,8 +52,8 @@ public class CreateMeetingFragment extends Fragment{
         return view;
     }
 
-
-    // TODO Date needs formatting properly
+    // TODO make so can't select past date/time
+    // TODO Date needs formatting properly so 0 and 1-9 are displayed properly
     // // Setup the date picker and handle the result
     public void setUpDatePicker() {
         final TextView textDate = (TextView) view.findViewById(R.id.textDate);
@@ -105,13 +105,9 @@ public class CreateMeetingFragment extends Fragment{
     // Check the form is all filled before it can be submitted
     public boolean isFormFilled() {
         boolean formComplete = false;
-        if(name.getText().length() >0  && description.getText().length() >0
-                && date.getText().length() >0  && time.getText().length() >0 && location.getText().length() > 0) {
-
-            Log.d("FormFilled", name.getText().toString());
-            Log.d("FormFilled", description.getText().toString());
-            Log.d("FormFilled", date.getText().toString());
-            Log.d("FormFilled", time.getText().toString());
+        if(name.getText().length() > 0  && description.getText().length() > 0
+                && date.getText().length() > 0  && time.getText().length() > 0
+                && location.getText().length() > 0) {
             formComplete = true;
         }
         return formComplete;
@@ -128,6 +124,7 @@ public class CreateMeetingFragment extends Fragment{
                 location.setText(strLocation);
             }
     }
+
     // Create the submit button's onClickListener
     public void setUpSubmitBtn() {
         submitBtn.setOnClickListener( new View.OnClickListener()
@@ -168,7 +165,7 @@ public class CreateMeetingFragment extends Fragment{
         });
     }
 
-    // Setup the componenets on the view
+    // Setup the components on the view
     public void setUpViewComponents(View view){
         submitBtn = (Button) view.findViewById(R.id.submitBtn);
         name = (EditText) view.findViewById(R.id.meetingName);
