@@ -1,10 +1,12 @@
 package matt.meetingplanner;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -23,6 +25,15 @@ public class PastMeetings  extends Fragment  {
         if(meetingList.size() != 0) {
             ListView listView = (ListView) rootView.findViewById(R.id.meetingList);
             listView.setAdapter(new MeetingListAdapter(getActivity(), meetingList));
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                    Meeting meeting = (Meeting)adapterView.getItemAtPosition(position);
+                    Intent intent = new Intent(getContext(), MeetingDetails.class);
+                    intent.putExtra("id", meeting.meetingID);
+                    startActivity(intent);
+                }
+            });
         }
 
         return rootView;
