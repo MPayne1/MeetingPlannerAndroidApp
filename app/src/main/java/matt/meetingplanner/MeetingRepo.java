@@ -114,6 +114,21 @@ public class MeetingRepo {
         return m;
     }
 
+    // get the meeting for the id
+    public Meeting getMeetingById(int id) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + Meeting.TABLE + " WHERE id = " + id +";";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        Meeting m = new Meeting();
+
+        if(cursor.moveToFirst()) {
+            createNewMeeting(m, cursor);
+        }
+        cursor.close();
+        db.close();
+        return m;
+    }
+
     // Convert string date time to milliseconds, for comparing
     private long dateTimeConvert(String date, String time) {
         long timeInMilliseconds =0 ;
