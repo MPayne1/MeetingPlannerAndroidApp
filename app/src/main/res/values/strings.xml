@@ -30,4 +30,5 @@
     <string name="yes">Yes</string>
     <string name="noMeetingsText">No Past Meetings</string>
     <string name="noUpcomingMeetingsTxt">No Upcoming Meetings</string>
+    <string name="details">Meeting Details</string>
 </resources>

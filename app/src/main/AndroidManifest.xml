@@ -43,6 +43,10 @@
         <activity
             android:name=".MeetingDetails"
             android:label="@string/meetingDetails"></activity>
+
+        <activity
+            android:name=".pastMeetingDetails"
+            android:label="@string/details"></activity>
     </application>
 
 </manifest>

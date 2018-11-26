@@ -58,7 +58,6 @@ public class MeetingListAdapter extends BaseAdapter {
         }
         holder.meetingName.setText(meetingList.get(position).name);
         holder.meetingDescription.setText(meetingList.get(position).description);
-
         holder.location.setText(meetingList.get(position).strLocation);
         holder.time.setText(meetingList.get(position).time);
         holder.date.setText(meetingList.get(position).date);
