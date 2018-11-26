@@ -59,14 +59,16 @@ public class CreateMeetingFragment extends Fragment{
         final TextView textDate = (TextView) view.findViewById(R.id.textDate);
         final Calendar newCalendar = Calendar.getInstance();
 
-        final DatePickerDialog StartTime = new DatePickerDialog(this.getContext(), R.style.DatePickerTheme ,new DatePickerDialog.OnDateSetListener() {
+        final DatePickerDialog StartTime = new DatePickerDialog(this.getContext(),
+                R.style.DatePickerTheme ,new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear + 1, dayOfMonth);
                 String FormattedDate = getString(R.string.dateFormatted, dayOfMonth, monthOfYear + 1, year);
                 textDate.setText(FormattedDate);
             }
-        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH),
+                newCalendar.get(Calendar.DAY_OF_MONTH));
 
         textDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,11 +90,13 @@ public class CreateMeetingFragment extends Fragment{
                 int hour = currentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = currentTime.get(Calendar.MINUTE);
                 TimePickerDialog timePicker;
-                timePicker = new TimePickerDialog(v.getContext(), R.style.TimePickerTheme, new TimePickerDialog.OnTimeSetListener() {
+                timePicker = new TimePickerDialog(v.getContext(), R.style.TimePickerTheme,
+                        new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         // TODO need to format time to keep leading 0s and do 00 properly
-                        String FormattedTime =  getString(R.string.timeFormatted, selectedHour, selectedMinute);
+                        String FormattedTime =  getString(R.string.timeFormatted, selectedHour,
+                                selectedMinute);
                         textTime.setText(FormattedTime);
                     }
                 }, hour, minute, true);//Yes 24 hour time
@@ -117,11 +121,18 @@ public class CreateMeetingFragment extends Fragment{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
             if (data.hasExtra("location")) {
-                LatLng loc = (LatLng) data.getExtras().get("location");
-                LatLngLocation = loc;
-                meeting.location = loc.toString();
-                strLocation = getAddress(loc);
-                location.setText(strLocation);
+                try {
+                    LatLng loc = (LatLng) data.getExtras().get("location");
+                    LatLngLocation = loc;
+                    meeting.location = loc.toString();
+                    strLocation = getAddress(loc);
+                    location.setText(strLocation);
+                }
+                catch(NullPointerException e) {
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            getContext().getString(R.string.addLocation), Toast.LENGTH_SHORT).show();
+                }
+
             }
     }
 
@@ -140,14 +151,16 @@ public class CreateMeetingFragment extends Fragment{
                     meeting.attendees = attendees.getText().toString();
                     meeting.strLocation = strLocation;
                     repo.insert(meeting);
-                    Toast.makeText(getActivity().getApplicationContext(), getContext().getString(R.string.meetingCreated), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            getContext().getString(R.string.meetingCreated), Toast.LENGTH_SHORT).show();
                     name.setText(null);
                     description.setText(null);
                     time.setText(null);
                     date.setText(null);
                     location.setText(null);
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), getContext().getString(R.string.formFilled), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            getContext().getString(R.string.formFilled), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -185,7 +198,8 @@ public class CreateMeetingFragment extends Fragment{
         Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
 
         try{
-            List<Address> addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1);
+            List<Address> addresses = geocoder.getFromLocation(location.latitude,
+                    location.longitude, 1);
             if(addresses != null) {
                 Address returnedAddress = addresses.get(0);
                 StringBuilder strReturnedAddress = new StringBuilder("");

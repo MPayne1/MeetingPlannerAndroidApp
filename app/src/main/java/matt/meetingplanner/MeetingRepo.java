@@ -50,7 +50,8 @@ public class MeetingRepo {
         values.put(Meeting.KEY_TIME, meeting.time);
         values.put(Meeting.KEY_ATTENDEES, meeting.attendees);
 
-        db.update(Meeting.TABLE, values, Meeting.KEY_ID + "= ? ", new String[] {String.valueOf(meeting.meetingID)});
+        db.update(Meeting.TABLE, values, Meeting.KEY_ID + "= ? ",
+                new String[] {String.valueOf(meeting.meetingID)});
         db.close();
 
     }
@@ -60,7 +61,8 @@ public class MeetingRepo {
     public void deleteMeeting(int id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        db.delete(Meeting.TABLE, Meeting.KEY_ID + "= ?", new String[] { String.valueOf(id) });
+        db.delete(Meeting.TABLE, Meeting.KEY_ID + "= ?",
+                new String[] { String.valueOf(id) });
         db.close();
     }
     // get list of all meetings
@@ -95,7 +97,8 @@ public class MeetingRepo {
             int compare = Long.compare(dateTime, currentTime.getTimeInMillis());
             Log.d("Compare", ""+compare);
             if(compare < 0){ // if compare < 0 meetingdate < currenttime
-                Log.d("DateTime", "Meeting time:" + dateTime + " Current time:" + System.currentTimeMillis());
+                Log.d("DateTime", "Meeting time:" + dateTime +
+                        " Current time:" + System.currentTimeMillis());
                 pastMeetings.add(meetingList.get(i));
             }
         }
@@ -114,7 +117,8 @@ public class MeetingRepo {
             int compare = Long.compare(dateTime, currentTime.getTimeInMillis());
             Log.d("Compare", ""+compare);
             if(compare > 0){ // if compare < 0 meetingdate < currenttime
-                Log.d("DateTime", "Meeting time:" + dateTime + " Current time:" + System.currentTimeMillis());
+                Log.d("DateTime", "Meeting time:" + dateTime +
+                        " Current time:" + System.currentTimeMillis());
                 futureMeetings.add(meetingList.get(i));
             }
         }
