@@ -95,6 +95,7 @@ public class CreateMeetingFragment extends Fragment{
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         // TODO need to format time to keep leading 0s and do 00 properly
+
                         String FormattedTime =  getString(R.string.timeFormatted, selectedHour,
                                 selectedMinute);
                         textTime.setText(FormattedTime);

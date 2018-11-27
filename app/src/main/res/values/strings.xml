@@ -32,4 +32,5 @@
     <string name="noUpcomingMeetingsTxt">No Upcoming Meetings</string>
     <string name="details">Meeting Details</string>
     <string name="addLocation">Please Add a Location</string>
+    <string name="openWeatherAPI_KEY">e0b9bcae773844fdd75d7e2e1b066a48</string>
 </resources>

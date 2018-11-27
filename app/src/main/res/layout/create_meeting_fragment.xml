@@ -36,7 +36,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:inputType="textAutoComplete"
         android:hint="@string/meetingName"
-        android:maxLength="30"
+        android:theme="@style/nameTheme"
     />
 
     <EditText
@@ -51,9 +51,9 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:inputType="textAutoComplete"
+        android:inputType="textMultiLine"
         android:hint="@string/meetingDesc"
-        android:maxLength="100"
+        android:theme="@style/DescTheme"
     />
 <LinearLayout
     android:layout_width="match_parent"
@@ -101,9 +101,9 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:inputType="textAutoComplete"
+        android:inputType="textMultiLine"
         android:hint="@string/attendeesHint"
-        android:maxLength="200"
+        android:theme="@style/attendeeTheme"
     />
 
     <TextView
