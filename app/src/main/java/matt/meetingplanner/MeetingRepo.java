@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.icu.util.Calendar;
-import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,10 +15,11 @@ import java.util.TimeZone;
 
 public class MeetingRepo {
     private DBHelper dbHelper;
-
+    private Context context;
 
     public MeetingRepo (Context context) {
         dbHelper = new DBHelper(context);
+        this.context = context;
     }
 
     // Insert new meeting
@@ -95,10 +95,7 @@ public class MeetingRepo {
         for(int i = 0; i < meetingList.size(); i++) {
             long dateTime = dateTimeConvert(meetingList.get(i).date, meetingList.get(i).time);
             int compare = Long.compare(dateTime, currentTime.getTimeInMillis());
-            Log.d("Compare", ""+compare);
             if(compare < 0){ // if compare < 0 meetingdate < currenttime
-                Log.d("DateTime", "Meeting time:" + dateTime +
-                        " Current time:" + System.currentTimeMillis());
                 pastMeetings.add(meetingList.get(i));
             }
         }
@@ -115,10 +112,7 @@ public class MeetingRepo {
         for(int i = 0; i < meetingList.size(); i++) {
             long dateTime = dateTimeConvert(meetingList.get(i).date, meetingList.get(i).time);
             int compare = Long.compare(dateTime, currentTime.getTimeInMillis());
-            Log.d("Compare", ""+compare);
             if(compare > 0){ // if compare < 0 meetingdate < currenttime
-                Log.d("DateTime", "Meeting time:" + dateTime +
-                        " Current time:" + System.currentTimeMillis());
                 futureMeetings.add(meetingList.get(i));
             }
         }
@@ -163,7 +157,7 @@ public class MeetingRepo {
         long timeInMilliseconds =0 ;
         String givenDateString = date + " " + time;
         SimpleDateFormat sdf = new SimpleDateFormat("dd / MM / yyyy HH : mm", Locale.ENGLISH);
-        String timeZone = "GMT";//it can be anything timezone like IST, GMT.
+        String timeZone = context.getString(R.string.timezoneGMT);
         sdf.setTimeZone(TimeZone.getTimeZone(timeZone));
         try {
             Date mDate = sdf.parse(givenDateString);
