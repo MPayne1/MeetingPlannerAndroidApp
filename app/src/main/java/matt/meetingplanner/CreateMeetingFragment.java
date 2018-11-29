@@ -58,14 +58,21 @@ public class CreateMeetingFragment extends Fragment{
     public void setUpDatePicker() {
         final TextView textDate = (TextView) view.findViewById(R.id.textDate);
         final Calendar newCalendar = Calendar.getInstance();
-
+        final Long today = System.currentTimeMillis() -1000;
         final DatePickerDialog StartTime = new DatePickerDialog(this.getContext(),
                 R.style.DatePickerTheme ,new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear + 1, dayOfMonth);
-                String FormattedDate = getString(R.string.dateFormatted, dayOfMonth, monthOfYear + 1, year);
-                textDate.setText(FormattedDate);
+                newDate.set(year, monthOfYear, dayOfMonth);
+                // check the date is in the future
+                if (newDate.getTimeInMillis() < today) {
+                    Toast.makeText(getContext(), getContext().getString(R.string.invalidDate),Toast.LENGTH_SHORT).show();
+                } else {
+                    newDate.set(year, monthOfYear + 1, dayOfMonth);
+                    String FormattedDate = getString(R.string.dateFormatted, dayOfMonth, monthOfYear + 1, year);
+                    textDate.setText(FormattedDate);
+                }
+
             }
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH),
                 newCalendar.get(Calendar.DAY_OF_MONTH));

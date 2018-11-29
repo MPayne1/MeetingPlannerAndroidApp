@@ -28,7 +28,7 @@ public class PastMeetings  extends Fragment  {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                     Meeting meeting = (Meeting)adapterView.getItemAtPosition(position);
-                    Intent intent = new Intent(getContext(), pastMeetingDetails.class);
+                    Intent intent = new Intent(getContext(), PastMeetingDetails.class);
                     intent.putExtra("id", meeting.meetingID);
                     startActivity(intent);
                 }
