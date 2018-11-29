@@ -34,4 +34,5 @@
     <string name="addLocation">Please Add a Location</string>
     <string name="timezoneGMT">GMT</string>
     <string name="invalidDate">Invalid date, please choose a future date</string>
+    <string name="weatherError">Unable to fetch weather data</string>
 </resources>
