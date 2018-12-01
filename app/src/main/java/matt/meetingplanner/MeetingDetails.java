@@ -9,13 +9,19 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ShareCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.support.v7.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -46,7 +52,9 @@ public class MeetingDetails extends AppCompatActivity {
     String strLocation;
     Meeting meeting = new Meeting();
     TextView weatherText;
-
+    ShareActionProvider shareActionProvider;
+    String shareContent;
+    Intent shareIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +73,43 @@ public class MeetingDetails extends AppCompatActivity {
         new GetWeather().execute();
     }
 
+    // create options menu
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.bar_items, menu);
 
-    // TODO make so can't select past date/time
+        setShareContent();
+        MenuItem shareItem = menu.findItem(R.id.action_share);
+        shareActionProvider = new android.support.v7.widget.ShareActionProvider(this);
+        MenuItemCompat.setActionProvider(shareItem, shareActionProvider);
+        shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, shareContent);
+        shareIntent = ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain").setText(shareContent).getIntent();
+        shareActionProvider.setShareIntent(shareIntent);
+
+        return true;
+    }
+
+    private void setShareContent() {
+        shareContent = this.getString(R.string.shareName) + meeting.name + "\n" +
+                this.getString(R.string.shareDesc) + meeting.description + "\n" +
+                this.getString(R.string.shareDate) + meeting.date + "\n" +
+                this.getString(R.string.shareTime) + meeting.time + "\n" +
+                this.getString(R.string.shareLocation) + meeting.strLocation;
+    }
+    // setup settings menu
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intent = new Intent(android.provider.Settings.ACTION_DISPLAY_SETTINGS);
+                startActivity(intent);
+                return true;
+        }
+        return false;
+    }
+
+
     // TODO Date needs formatting properly so 0 and 1-9 are displayed properly
     // Setup the date picker and handle the result
     public void setUpDatePicker() {
@@ -84,7 +127,7 @@ public class MeetingDetails extends AppCompatActivity {
                     newDate.set(year, monthOfYear + 1, dayOfMonth);
                     String FormattedDate = getString(R.string.dateFormatted, dayOfMonth, monthOfYear + 1, year);
                     date.setText(FormattedDate);
-
+                    setShareContent();
                     new GetWeather().execute();
                 }
 
@@ -98,6 +141,8 @@ public class MeetingDetails extends AppCompatActivity {
                 StartTime.show();
             }
         });
+
+
     }
 
     // Setup the time picker and handle the result
@@ -117,7 +162,7 @@ public class MeetingDetails extends AppCompatActivity {
                         // TODO need to format time to keep leading 0s and do 00 properly
                         String FormattedTime =  getString(R.string.timeFormatted, selectedHour, selectedMinute);
                         time.setText(FormattedTime);
-
+                        setShareContent();
                         new GetWeather().execute();
                     }
                 }, hour, minute, true);//Yes 24 hour time
@@ -125,6 +170,7 @@ public class MeetingDetails extends AppCompatActivity {
                 timePicker.show();
             }
         });
+
     }
 
     // Handle the result from the maps activity
@@ -134,12 +180,12 @@ public class MeetingDetails extends AppCompatActivity {
             LatLng loc = (LatLng) data.getExtras().get("location");
             LatLngLocation = loc;
             meeting.location = loc.toString();
-            meeting.strLocation=
             strLocation = getAddress(loc);
             meeting.strLocation = strLocation;
             location.setText(strLocation);
 
             new GetWeather().execute();
+            setShareContent();
         }
     }
 
@@ -259,6 +305,7 @@ public class MeetingDetails extends AppCompatActivity {
         return formComplete;
     }
 
+    // create confirm/cancel dialog when cancelling a meeting
     public AlertDialog createConfirmCancelDialog() {
         AlertDialog cancelDialog = new AlertDialog.Builder(this, R.style.CancelMeetingDialog)
                 .setTitle(getBaseContext().getString(R.string.cancelMeeting))
@@ -276,6 +323,7 @@ public class MeetingDetails extends AppCompatActivity {
         return cancelDialog;
     }
 
+    // convert the stirng into latlng
     private LatLng getLatLngFromString(String str) {
 
         String[] latlngLocation = str.split(",");
@@ -304,7 +352,7 @@ public class MeetingDetails extends AppCompatActivity {
         return timeInMilliseconds;
     }
 
-
+    // Async task to handle the weather api request
     private class GetWeather extends AsyncTask<Void, Void, Void> {
         String res;
         @Override

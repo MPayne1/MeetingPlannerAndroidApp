@@ -35,4 +35,10 @@
     <string name="timezoneGMT">GMT</string>
     <string name="invalidDate">Invalid date, please choose a future date</string>
     <string name="weatherError">Unable to fetch weather data</string>
+    <string name="share">Share</string>
+    <string name="shareName">Name: </string>
+    <string name="shareDesc">Description: </string>
+    <string name="shareDate">Date: </string>
+    <string name="shareTime">Time: </string>
+    <string name="shareLocation">Location: </string>
 </resources>
