@@ -41,4 +41,8 @@
     <string name="shareDate">Date: </string>
     <string name="shareTime">Time: </string>
     <string name="shareLocation">Location: </string>
+    <string name="newMeetingLocation">New Meeting Location</string>
+    <string name="curMeetingLoc">Current Meeting Location</string>
+    <string name="locationAdded">Location Added</string>
+    <string name="forecastAPIKEY">d1c3303bb45cb861acddfa658b0ad6f1</string>
 </resources>

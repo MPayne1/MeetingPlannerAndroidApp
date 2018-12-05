@@ -6,16 +6,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.icu.util.Calendar;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+
+import matt.meetingplanner.converter.DateTimeConverter;
 
 public class MeetingRepo {
     private DBHelper dbHelper;
     private Context context;
+    private DateTimeConverter dateTimeConverter = new DateTimeConverter();
 
     public MeetingRepo (Context context) {
         dbHelper = new DBHelper(context);
@@ -56,7 +54,6 @@ public class MeetingRepo {
 
     }
 
-
     // Delete the meeting with id
     public void deleteMeeting(int id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -65,6 +62,7 @@ public class MeetingRepo {
                 new String[] { String.valueOf(id) });
         db.close();
     }
+
     // get list of all meetings
     public ArrayList<Meeting> getMeetingList() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -93,7 +91,7 @@ public class MeetingRepo {
         Calendar currentTime= Calendar.getInstance();
 
         for(int i = 0; i < meetingList.size(); i++) {
-            long dateTime = dateTimeConvert(meetingList.get(i).date, meetingList.get(i).time);
+            long dateTime = dateTimeConverter.dateTimeConvert(context, meetingList.get(i).date, meetingList.get(i).time);
             int compare = Long.compare(dateTime, currentTime.getTimeInMillis());
             if(compare < 0){ // if compare < 0 meetingdate < currenttime
                 pastMeetings.add(meetingList.get(i));
@@ -110,9 +108,9 @@ public class MeetingRepo {
         Calendar currentTime= Calendar.getInstance();
 
         for(int i = 0; i < meetingList.size(); i++) {
-            long dateTime = dateTimeConvert(meetingList.get(i).date, meetingList.get(i).time);
+            long dateTime = dateTimeConverter.dateTimeConvert(context, meetingList.get(i).date, meetingList.get(i).time);
             int compare = Long.compare(dateTime, currentTime.getTimeInMillis());
-            if(compare > 0){ // if compare < 0 meetingdate < currenttime
+            if(compare > 0){ // if compare < 0, meetingdate < currenttime
                 futureMeetings.add(meetingList.get(i));
             }
         }
@@ -124,7 +122,6 @@ public class MeetingRepo {
     public Meeting getMostRecentlyCreatedMeeting() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + Meeting.TABLE +";";
-
 
         Cursor cursor = db.rawQuery(selectQuery, null);
         Meeting m = new Meeting();
@@ -152,21 +149,6 @@ public class MeetingRepo {
         return m;
     }
 
-    // Convert string date time to milliseconds, for comparing
-    private long dateTimeConvert(String date, String time) {
-        long timeInMilliseconds =0 ;
-        String givenDateString = date + " " + time;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd / MM / yyyy HH : mm", Locale.ENGLISH);
-        String timeZone = context.getString(R.string.timezoneGMT);
-        sdf.setTimeZone(TimeZone.getTimeZone(timeZone));
-        try {
-            Date mDate = sdf.parse(givenDateString);
-            timeInMilliseconds = mDate.getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return timeInMilliseconds;
-    }
 
     // Add all relevant data to new meeting object
     private Meeting createNewMeeting(Meeting m, Cursor cursor) {

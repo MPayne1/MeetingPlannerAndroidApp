@@ -5,14 +5,13 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.util.Calendar;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +20,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.support.v7.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -31,12 +29,8 @@ import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
+import matt.meetingplanner.converter.DateTimeConverter;
+import matt.meetingplanner.converter.LatLngConverter;
 
 public class MeetingDetails extends AppCompatActivity {
 
@@ -51,6 +45,7 @@ public class MeetingDetails extends AppCompatActivity {
     LatLng LatLngLocation = null;
     String strLocation;
     Meeting meeting = new Meeting();
+    LatLngConverter latLngConverter = new LatLngConverter();
     TextView weatherText;
     ShareActionProvider shareActionProvider;
     String shareContent;
@@ -69,7 +64,7 @@ public class MeetingDetails extends AppCompatActivity {
         setUpLocationBtn();
         setUpEditBtn();
         setUpCancelMeetingBtn();
-
+        LatLngLocation = latLngConverter.getLatLngFromString(meeting.location);
         new GetWeather().execute();
     }
 
@@ -178,14 +173,19 @@ public class MeetingDetails extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if (data.hasExtra("location")) {
             LatLng loc = (LatLng) data.getExtras().get("location");
-            LatLngLocation = loc;
-            meeting.location = loc.toString();
-            strLocation = getAddress(loc);
-            meeting.strLocation = strLocation;
-            location.setText(strLocation);
+            try{
+                LatLngLocation = loc;
+                meeting.location = loc.toString();
+                strLocation = latLngConverter.getAddress(loc, this);
+                meeting.strLocation = strLocation;
+                location.setText(strLocation);
 
-            new GetWeather().execute();
-            setShareContent();
+                new GetWeather().execute();
+                setShareContent();
+            }catch(Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -195,7 +195,7 @@ public class MeetingDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), MapsActivity.class);
-                if(LatLngLocation != null) intent.putExtra("location", LatLngLocation);
+                intent.putExtra("location", LatLngLocation);
                 startActivityForResult(intent, 10);
             }
         });
@@ -271,28 +271,7 @@ public class MeetingDetails extends AppCompatActivity {
 
     }
 
-    // Get the address of the meeting location, better for usability than latlng
-    public String getAddress(LatLng location) {
-        String strAdd = "";
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
-        try{
-            List<Address> addresses = geocoder.getFromLocation(location.latitude,
-                    location.longitude, 1);
-            if(addresses != null) {
-                Address returnedAddress = addresses.get(0);
-                StringBuilder strReturnedAddress = new StringBuilder("");
-
-                for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
-                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
-                }
-                strAdd = strReturnedAddress.toString();
-            }
-        } catch (Exception e) {
-
-        }
-        return strAdd;
-    }
 
     // Check the form is all filled before it can be submitted
     public boolean isFormFilled() {
@@ -323,34 +302,6 @@ public class MeetingDetails extends AppCompatActivity {
         return cancelDialog;
     }
 
-    // convert the stirng into latlng
-    private LatLng getLatLngFromString(String str) {
-
-        String[] latlngLocation = str.split(",");
-        String loc1 = latlngLocation[0].substring(10);
-        String loc2 = latlngLocation[1].substring(0,latlngLocation[1].length()-1);
-        double lat = Double.parseDouble(loc1);
-        double lng = Double.parseDouble(loc2);
-
-        LatLng latlng = new LatLng(lat, lng);
-        return latlng;
-
-    }
-    // Convert string date time to milliseconds, for comparing
-    private long dateTimeConvert(String date, String time) {
-        long timeInMilliseconds =0 ;
-        String givenDateString = date + " " + time;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd / MM / yyyy HH : mm", Locale.ENGLISH);
-        String timeZone = getBaseContext().getString(R.string.timezoneGMT);
-        sdf.setTimeZone(TimeZone.getTimeZone(timeZone));
-        try {
-            Date mDate = sdf.parse(givenDateString);
-            timeInMilliseconds = mDate.getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return timeInMilliseconds;
-    }
 
     // Async task to handle the weather api request
     private class GetWeather extends AsyncTask<Void, Void, Void> {
@@ -362,11 +313,13 @@ public class MeetingDetails extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void...arg0){
+            LatLngConverter latLngConverter = new LatLngConverter();
+            DateTimeConverter dateTimeConverter = new DateTimeConverter();
             HttpHandler httpHandler = new HttpHandler();
-            LatLng loc = getLatLngFromString(meeting.location);
-            long dateTime = dateTimeConvert(meeting.date, meeting.time);
+            LatLng loc = latLngConverter.getLatLngFromString(meeting.location);
+            long dateTime = dateTimeConverter.dateTimeConvert(getBaseContext(),meeting.date, meeting.time);
             // "https://api.darksky.net/forecast/[key]/[latitude],[longitude],[time]"
-            String url = "https://api.darksky.net/forecast/d1c3303bb45cb861acddfa658b0ad6f1/" + loc.latitude + "," + loc.longitude + "," + (dateTime/1000);
+            String url = "https://api.darksky.net/forecast/"+ getString(R.string.forecastAPIKEY)+"/" + loc.latitude + "," + loc.longitude + "," + (dateTime/1000);
             String jsonStr = httpHandler.makeServiceCall(url);
 
             if(jsonStr != null) {
@@ -393,6 +346,5 @@ public class MeetingDetails extends AppCompatActivity {
             weatherText.setText(res);
         }
     }
-
 
 }
