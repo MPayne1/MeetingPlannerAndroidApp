@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import matt.meetingplanner.adapter.MeetingListAdapter;
 
-public class PastMeetings  extends Fragment  {
+public class PastMeetingsFragment extends Fragment  {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
